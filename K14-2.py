@@ -29,10 +29,15 @@ def K14_counts(filename):
     try:
         with open(filename, 'r') as file:
             urls = file.readlines()
+            threads = []
             for url in urls:
                 url = url.strip()
                 if url:
-                    K14(url)
+                    thread = threading.Thread(target=K14, args=(url,))
+                    threads.append(thread)
+                    thread.start()
+            for thread in threads:
+                thread.join()
     except Exception as e:
         print(f"发生错误: {str(e)}")
 
@@ -44,6 +49,7 @@ ooO--(_)--Ooo-ooO--(_)--Ooo-ooO--(_)--Ooo------------------ooO--(_)--Ooo-
 
 '''
     print(logo)
+    print("wirten by YZX100")
 # 帮助信息
 def main():
     parser = argparse.ArgumentParser(description="K14-2开源-热网无线监测系统-SQL")
